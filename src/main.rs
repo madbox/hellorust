@@ -25,13 +25,15 @@ impl PrintToTerm for Lord {
     }
 }
 
-fn print_people_list(peoplevec: &Vec<Box<dyn PrintToTerm>>) {
+fn print_people_list(peoplevec: &Vec<Box<dyn PrintToTerm>>) -> i32 {
     println!("Fellow people of the HelloWorld:");
 
     for person in peoplevec.iter() {
         print!("\t - ");
         person.prn();
     }
+
+    peoplevec.len() as i32
 }
 
 fn main() {
@@ -49,5 +51,6 @@ fn main() {
     people.push(Box::new(h));
     people.push(Box::new(h2));
 
-    print_people_list(&people);
+    println!("Total people count: {}",
+             print_people_list(&people));
 }
