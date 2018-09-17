@@ -25,6 +25,14 @@ impl PrintToTerm for Lord {
     }
 }
 
+fn print_people_list(peoplevec: &Vec<Box<dyn PrintToTerm>>) {
+    println!("Fellow people of the HelloWorld:");
+
+    for person in peoplevec.iter() {
+        print!("\t - ");
+        person.prn();
+    }
+}
 
 fn main() {
     let mut people: Vec<Box<dyn PrintToTerm>> = Vec::new();
@@ -41,10 +49,5 @@ fn main() {
     people.push(Box::new(h));
     people.push(Box::new(h2));
 
-    println!("Fellow people of the HelloWorld:");
-
-    for person in people.iter() {
-        print!("\t - ");
-        person.prn();
-    }
+    print_people_list(&people);
 }
