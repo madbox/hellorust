@@ -1,3 +1,9 @@
+extern crate rand;
+
+use rand::thread_rng;
+use rand::seq::SliceRandom;
+
+
 // Implementing some kind of polymorphism with Traits
 
 pub trait PrintToTerm {
@@ -36,15 +42,20 @@ fn print_people_list(peoplevec: &Vec<Box<dyn PrintToTerm>>) -> i32 {
     peoplevec.len() as i32
 }
 
+const NAMES: &'static [&'static str] = &["Arne", "Bjørn", "Eirik",  "Geir",  "Gisle", "Gunnar", "Harald",  "Håkon", "Inge", "Ivar", "Knut", "Leif", "Magnus", "Olav", "Rolf", "Sigurd", "Snorre", "Steinar", "Torstein", "Trygve", "Ulf", "Valdemar", "Vidar", "Yngve", "Tankard", "Northendale", "Theodric"];
+
 fn main() {
     let mut people: Vec<Box<dyn PrintToTerm>> = Vec::new();
+    let mut rng = thread_rng();
+
 
     let h = Peasant {
-        name: String::from("Tankard")
+        name: String::from(*NAMES.choose(&mut rng).unwrap())
+//        name: String::from("Tankard")
     };
 
     let h2 = Lord {
-        name: String::from("Theodric"),
+        name: String::from(*NAMES.choose(&mut rng).unwrap()),
         land: String::from("Northendale"),
     };
 
