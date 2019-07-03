@@ -41,7 +41,7 @@ fn print_people_list(peoplevec: &Vec<Box<dyn PrintToTerm>>) -> i32 {
 
     peoplevec.len() as i32
 }
-
+const PEOPLE_COUNT: i8 = 3;
 const NAMES: &'static [&'static str] = &["Arne", "Bjørn", "Eirik",  "Geir",  "Gisle", "Gunnar", "Harald",  "Håkon", "Inge", "Ivar", "Knut", "Leif", "Magnus", "Olav", "Rolf", "Sigurd", "Snorre", "Steinar", "Torstein", "Trygve", "Ulf", "Valdemar", "Vidar", "Yngve", "Tankard", "Northendale", "Theodric"];
 
 fn main() {
@@ -49,9 +49,11 @@ fn main() {
     let mut rng = thread_rng();
 
 
-    let h = Peasant {
-        name: String::from(*NAMES.choose(&mut rng).unwrap())
-//        name: String::from("Tankard")
+    for _ in 0..PEOPLE_COUNT {
+        let h = Peasant {
+            name: String::from(*NAMES.choose(&mut rng).unwrap())
+        };
+        people.push(Box::new(h));
     };
 
     let h2 = Lord {
@@ -59,9 +61,22 @@ fn main() {
         land: String::from("Northendale"),
     };
 
-    people.push(Box::new(h));
     people.push(Box::new(h2));
 
     println!("Total people count: {}",
              print_people_list(&people));
+
+    let myprint = |s: &String| -> String {
+	    return format!("This is a function + {}", s);
+    };
+
+    let mut somestring = String::from("initstr!");
+	
+    println!("Fisrt attempt: {}", myprint(&somestring));
+
+    somestring.push_str("+++");
+
+    println!("Second attempt: {}", myprint(&somestring));
+
+
 }

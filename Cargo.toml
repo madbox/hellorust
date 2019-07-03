@@ -5,3 +5,4 @@ authors = ["michael"]
 
 [dependencies]
 rand = "0.6.4"
+hyper = "0.12.23"
