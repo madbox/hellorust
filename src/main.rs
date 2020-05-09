@@ -1,13 +1,16 @@
 extern crate rand;
 
-use rand::thread_rng;
+use rand::{thread_rng, Rng};
 use rand::seq::SliceRandom;
 
 
 // Implementing some kind of polymorphism with Traits
 
 pub trait PrintToTerm {
-    fn prn(&self);
+    fn prn(&self) {
+        println!("{}", self.get_str())
+    }
+    fn get_str(&self) -> String;
 }
 
 pub struct Peasant {
@@ -15,8 +18,8 @@ pub struct Peasant {
 }
 
 impl PrintToTerm for Peasant {
-    fn prn(&self) {
-        println!("Peasant {}", self.name)
+    fn get_str(&self) -> String {
+        format!("Peasant {}", self.name)
     }
 }
 
@@ -26,8 +29,8 @@ pub struct Lord {
 }
 
 impl PrintToTerm for Lord {
-    fn prn(&self) {
-        println!("Lord {} of the {}", self.name, self.land)
+    fn get_str(&self) -> String {
+        format!("Lord {} of the {}", self.name, self.land)
     }
 }
 
@@ -41,7 +44,7 @@ fn print_people_list(peoplevec: &Vec<Box<dyn PrintToTerm>>) -> i32 {
 
     peoplevec.len() as i32
 }
-const PEOPLE_COUNT: i8 = 3;
+
 const NAMES: &'static [&'static str] = &["Arne", "Bjørn", "Eirik",  "Geir",  "Gisle", "Gunnar", "Harald",  "Håkon", "Inge", "Ivar", "Knut", "Leif", "Magnus", "Olav", "Rolf", "Sigurd", "Snorre", "Steinar", "Torstein", "Trygve", "Ulf", "Valdemar", "Vidar", "Yngve", "Tankard", "Northendale", "Theodric"];
 
 fn main() {
@@ -49,7 +52,7 @@ fn main() {
     let mut rng = thread_rng();
 
 
-    for _ in 0..PEOPLE_COUNT {
+    for _ in 0..rng.gen_range(2,5) {
         let h = Peasant {
             name: String::from(*NAMES.choose(&mut rng).unwrap())
         };
@@ -77,6 +80,4 @@ fn main() {
     somestring.push_str("+++");
 
     println!("Second attempt: {}", myprint(&somestring));
-
-
 }
